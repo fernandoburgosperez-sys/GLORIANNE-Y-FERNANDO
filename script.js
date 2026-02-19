@@ -1,79 +1,30 @@
-const envelope = document.getElementById("envelope");
+const stage = document.getElementById("stage");
 const intro = document.getElementById("intro");
 const main = document.getElementById("main");
-const wax = document.getElementById("wax");
-
-const crack = document.getElementById("crackSound");
-const paper = document.getElementById("paperSound");
+const debug = document.getElementById("debug");
+const img = document.querySelector(".envelope-img");
 
 let opened = false;
-let audioPrimed = false;
 
-// Timing total ~2.5s
-const T_CRACK_SHOW = 90;     // aparece grieta
-const T_SPLIT = 180;         // se separan piezas (pegadas)
-const T_OPEN = 420;          // abre solapa + papel
-const T_FADE = 2500;         // transicion
+// Diagnóstico de carga de imagen (para que no volvamos a ciegas)
+img.addEventListener("load", () => {
+  debug.textContent = "";
+});
+img.addEventListener("error", () => {
+  debug.textContent = "No se encuentra ./assets/envelope-closed.png (ruta o nombre no coincide).";
+});
 
-function safePlay(a){
-  if(!a) return;
-  a.currentTime = 0;
-  const p = a.play();
-  if(p && p.catch) p.catch(()=>{});
-}
-
-// iOS warm-up (silencioso) para permitir audio en click
-function primeAudio(){
-  if(audioPrimed) return;
-  audioPrimed = true;
-
-  [crack, paper].forEach(a=>{
-    if(!a) return;
-    a.muted = true;
-    a.currentTime = 0;
-    const p = a.play();
-    if(p && p.then){
-      p.then(()=>{ a.pause(); a.currentTime = 0; a.muted = false; }).catch(()=>{ a.muted = false; });
-    } else {
-      a.muted = false;
-    }
-  });
-}
-
-function run(){
-  if(opened) return;
+stage.addEventListener("click", () => {
+  if (opened) return;
   opened = true;
 
-  // 1) Sonido crack + grieta visible
-  safePlay(crack);
-  setTimeout(()=> wax.classList.add("crack"), T_CRACK_SHOW);
+  stage.classList.add("open");
 
-  // 2) Separación mínima + miguitas
-  setTimeout(()=> wax.classList.add("split"), T_SPLIT);
-
-  // 3) Abrir sobre + sonido papel
-  setTimeout(()=>{
-    envelope.classList.add("open");
-    safePlay(paper);
-  }, T_OPEN);
-
-  // 4) Fade y mostrar contenido
-  setTimeout(()=>{
+  // transición simple
+  setTimeout(() => {
     intro.classList.add("fade");
     main.classList.add("show");
     main.setAttribute("aria-hidden", "false");
-  }, T_FADE);
-}
-
-["pointerdown","touchstart","mousedown"].forEach(evt=>{
-  envelope.addEventListener(evt, primeAudio, { passive:true });
-});
-
-envelope.addEventListener("click", run);
-envelope.addEventListener("keydown", (e)=>{
-  if(e.key === "Enter" || e.key === " "){
-    e.preventDefault();
-    run();
-  }
+  }, 1400);
 });
 
