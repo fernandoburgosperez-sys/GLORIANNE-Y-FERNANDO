@@ -1,121 +1,93 @@
-const envelope = document.getElementById("envelope");
-const introScreen = document.getElementById("introScreen");
-const mainContent = document.getElementById("mainContent");
-const paperSound = document.getElementById("paperSound");
+* { margin:0; padding:0; box-sizing:border-box; }
 
-let hasOpened = false;
-let audioPrimed = false;
-
-// Ajustes (deben casar con CSS)
-const OPEN_ANIM_MS = 1100;
-const HOLD_OPEN_MS = 1400;
-const FADE_MS = 900;
-
-// Fecha boda (hora local); ajusta si quieres hora exacta
-const WEDDING_DATE = new Date("2027-01-30T00:00:00");
-
-// ---- Audio prime (iOS-friendly) ----
-function primeAudio() {
-  if (!paperSound || audioPrimed) return;
-  audioPrimed = true;
-
-  // Truco: reproducir y pausar instantáneamente en el primer gesto del usuario
-  paperSound.muted = true;
-  paperSound.currentTime = 0;
-
-  const p = paperSound.play();
-  if (p && typeof p.then === "function") {
-    p.then(() => {
-      paperSound.pause();
-      paperSound.currentTime = 0;
-      paperSound.muted = false;
-    }).catch(() => {
-      // si falla, no pasa nada; seguirá intentando en el click de abrir
-      paperSound.muted = false;
-    });
-  } else {
-    paperSound.muted = false;
-  }
+body{
+    background:#f4efe8;
+    font-family:'Cormorant Garamond', serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    overflow:hidden;
 }
 
-function playPaperSound() {
-  if (!paperSound) return;
-  paperSound.muted = false;
-  paperSound.currentTime = 0;
-  const p = paperSound.play();
-  if (p && typeof p.catch === "function") p.catch(() => {});
+/* INTRO */
+.intro{
+    position:fixed;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background:#efe9df;
+    transition:opacity 0.8s ease;
 }
 
-// ---- Animación flujo ----
-function openEnvelopeFlow() {
-  if (hasOpened) return;
-  hasOpened = true;
-
-  envelope.classList.add("open");
-  playPaperSound();
-
-  setTimeout(() => {
-    setTimeout(() => {
-      introScreen.classList.add("fade-out");
-      introScreen.setAttribute("aria-hidden", "true");
-
-      mainContent.classList.add("reveal");
-      mainContent.setAttribute("aria-hidden", "false");
-
-      setTimeout(() => { introScreen.style.display = "none"; }, FADE_MS + 50);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, HOLD_OPEN_MS);
-  }, OPEN_ANIM_MS);
+.intro.fade{
+    opacity:0;
+    pointer-events:none;
 }
 
-// ---- Eventos ----
-// Primer toque/click: prepara audio (sin sonar) incluso si luego el usuario tarda en abrir
-["pointerdown", "touchstart", "mousedown"].forEach(evt => {
-  envelope.addEventListener(evt, primeAudio, { passive: true });
-});
-
-// Abrir
-envelope.addEventListener("click", openEnvelopeFlow);
-envelope.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" || e.key === " ") {
-    e.preventDefault();
-    openEnvelopeFlow();
-  }
-});
-
-// ---- Cuenta atrás ----
-function pad2(n){ return String(n).padStart(2, "0"); }
-
-function updateCountdown() {
-  const now = new Date();
-  const diff = WEDDING_DATE - now;
-
-  const daysEl = document.getElementById("cdDays");
-  const hoursEl = document.getElementById("cdHours");
-  const minEl = document.getElementById("cdMinutes");
-  const secEl = document.getElementById("cdSeconds");
-
-  if (!daysEl || !hoursEl || !minEl || !secEl) return;
-
-  if (diff <= 0) {
-    daysEl.textContent = "0";
-    hoursEl.textContent = "00";
-    minEl.textContent = "00";
-    secEl.textContent = "00";
-    return;
-  }
-
-  const totalSeconds = Math.floor(diff / 1000);
-  const days = Math.floor(totalSeconds / 86400);
-  const hours = Math.floor((totalSeconds % 86400) / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = totalSeconds % 60;
-
-  daysEl.textContent = String(days);
-  hoursEl.textContent = pad2(hours);
-  minEl.textContent = pad2(minutes);
-  secEl.textContent = pad2(seconds);
+.envelope-container{
+    position:relative;
+    width:420px;
+    max-width:90vw;
+    cursor:pointer;
+    perspective:1000px;
 }
 
-updateCountdown();
-setInterval(updateCountdown, 1000);
+.envelope-img{
+    width:100%;
+    display:block;
+    border-radius:6px;
+    box-shadow:0 25px 60px rgba(0,0,0,0.15);
+    transition:transform 0.8s ease;
+}
+
+/* SOLAPA */
+.flap{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:50%;
+    transform-origin:top;
+    transition:transform 0.8s ease;
+}
+
+/* CARTA */
+.letter{
+    position:absolute;
+    width:80%;
+    left:10%;
+    top:45%;
+    background:white;
+    padding:20px;
+    text-align:center;
+    transform:translateY(50px);
+    transition:transform 0.8s ease;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+.open .flap{
+    transform:rotateX(-160deg);
+}
+
+.open .letter{
+    transform:translateY(-120px);
+}
+
+.microcopy{
+    margin-top:20px;
+    font-size:15px;
+    letter-spacing:1px;
+    color:#555;
+}
+
+.main{
+    opacity:0;
+    transition:opacity 1s ease;
+}
+
+.main.show{
+    opacity:1;
+}
