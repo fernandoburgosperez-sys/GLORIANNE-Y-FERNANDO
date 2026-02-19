@@ -1,41 +1,66 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Glorianne & Fernando</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
 <div class="intro" id="intro">
-    <div class="envelope-container" id="envelope">
-        <img src="assets/envelope-closed.png" class="envelope-img" alt="Sobre con sello">
+  <div class="envelope-stage" id="envelope" role="button" tabindex="0" aria-label="Abrir invitación">
+    <img src="assets/envelope-closed.png" class="envelope-img" alt="Sobre" />
 
-        <div class="flap"></div>
-        <div class="letter">
-            <h1>Glorianne & Fernando</h1>
-            <p>30 de enero de 2027 · Santo Domingo</p>
-        </div>
+    <!-- SELLO ANIMADO (encima de la imagen) -->
+    <div class="wax" id="wax" aria-hidden="true">
+      <div class="wax-half wax-left"></div>
+      <div class="wax-half wax-right"></div>
+
+      <!-- grieta -->
+      <svg class="wax-crack" viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M52 10 L47 22 L58 34 L50 46 L60 58 L48 70 L54 82 L45 92"
+              fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+
+      <!-- miguitas -->
+      <span class="crumb c1"></span>
+      <span class="crumb c2"></span>
+      <span class="crumb c3"></span>
+      <span class="crumb c4"></span>
+
+      <div class="wax-monogram">G&F</div>
     </div>
 
-    <p class="microcopy">Pulsa para abrir</p>
+    <!-- SOLAPA + CARTA -->
+    <div class="flap" aria-hidden="true"></div>
+
+    <div class="letter" aria-hidden="true">
+      <h1>Glorianne & Fernando</h1>
+      <p>30 de enero de 2027 · Santo Domingo</p>
+    </div>
+  </div>
+
+  <p class="microcopy">Pulsa para abrir</p>
 </div>
 
+<!-- Sonidos -->
 <audio id="crackSound" preload="auto">
-  <source src="assets/crack.mp3" type="audio/mpeg">
+  <source src="assets/crack.mp3" type="audio/mpeg" />
 </audio>
-
 <audio id="paperSound" preload="auto">
-  <source src="assets/paper.mp3" type="audio/mpeg">
+  <source src="assets/paper.mp3" type="audio/mpeg" />
 </audio>
 
-<div class="main" id="main">
-    <h2>Nos hace mucha ilusión compartir contigo un día muy especial.</h2>
-</div>
+<!-- Contenido real -->
+<main class="main" id="main" aria-hidden="true">
+  <h2>Nos hace mucha ilusión compartir contigo un día muy especial.</h2>
+</main>
 
 <script src="script.js"></script>
 </body>
 </html>
+
