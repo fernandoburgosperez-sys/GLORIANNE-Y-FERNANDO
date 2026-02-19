@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glorianne & Fernando</title>
+
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- PANTALLA DEL SOBRE -->
+  <div class="intro-screen" id="introScreen" aria-hidden="false">
+    <div class="envelope-wrapper" id="envelope" role="button" tabindex="0" aria-label="Abrir invitación">
+      <div class="envelope">
+        <div class="flap"></div>
+        <div class="letter">
+          <h1>Glorianne & Fernando</h1>
+          <p>30 de enero de 2027</p>
+          <p>Santo Domingo</p>
+        </div>
+      </div>
+      <p class="microcopy">Pulsa para abrir</p>
+    </div>
+  </div>
+
+  <!-- AUDIO (pon el archivo en /assets/paper.mp3) -->
+  <audio id="paperSound" preload="auto">
+    <source src="assets/paper.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- CONTENIDO REAL -->
+  <main class="main-content" id="mainContent" aria-hidden="true">
+
+    <header class="hero">
+      <p class="kicker">INVITACIÓN</p>
+      <h2>Glorianne & Fernando</h2>
+      <p class="subtitle">30 de enero de 2027 · Santo Domingo (R.D.)</p>
+
+      <div class="cta">
+        <a class="btn primary" href="#rsvp">Confirmar asistencia</a>
+        <a class="btn secondary" href="#playlist">Sugerir canción</a>
+      </div>
+    </header>
+
+    <section class="card" id="info">
+      <h3>Ceremonia</h3>
+      <div class="grid">
+        <div>
+          <p class="label">Iglesia</p>
+          <p>Convento de los Dominicos</p>
+        </div>
+        <div>
+          <p class="label">Hora</p>
+          <p>(pendiente)</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3>Celebración</h3>
+      <div class="grid">
+        <div>
+          <p class="label">Lugar</p>
+          <p>Hotel Nicolás de Ovando</p>
+        </div>
+        <div>
+          <p class="label">Hora</p>
+          <p>(pendiente)</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="dresscode">
+      <h3>Código de vestimenta</h3>
+      <p>Hombres → Chacabana o Guayavera</p>
+    </section>
+
+    <section class="card" id="countdown">
+      <h3>Cuenta atrás</h3>
+      <div class="countdown" aria-live="polite">
+        <div><span id="cdDays">—</span><small>días</small></div>
+        <div><span id="cdHours">—</span><small>horas</small></div>
+        <div><span id="cdMinutes">—</span><small>min</small></div>
+        <div><span id="cdSeconds">—</span><small>seg</small></div>
+      </div>
+    </section>
+
+    <section class="card" id="rsvp">
+      <h3>Confirmación de asistencia (RSVP)</h3>
+      <p class="muted">Por favor confirma tu asistencia antes del (pendiente).</p>
+
+      <!-- Placeholder: aquí luego incrustamos Google Forms -->
+      <div class="placeholder">
+        <p><strong>Formulario RSVP</strong></p>
+        <p class="muted">Aquí irá el formulario (Google Forms) con confirmación visual.</p>
+      </div>
+    </section>
+
+    <section class="card" id="playlist">
+      <h3>Playlist</h3>
+      <p>Queremos que la música también tenga tu toque. Añade la canción que no puede faltar.</p>
+
+      <!-- Placeholder: link a playlist colaborativa -->
+      <a class="btn secondary" href="#" onclick="return false;">Abrir playlist de Spotify (pendiente)</a>
+    </section>
+
+    <section class="card" id="final">
+      <h3>Mensaje final</h3>
+      <p>Gracias por ser parte de nuestra historia.</p>
+      <p class="signature">Con cariño, Fernando & Glorianne.</p>
+    </section>
+
+    <footer class="footer">
+      <p class="muted">© Glorianne & Fernando</p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
