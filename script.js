@@ -3,25 +3,22 @@ const wax = document.getElementById("wax");
 
 let opened = false;
 
-// timing elegante
-const T_CRACK_SHOW = 90;   // aparece grieta
-const T_SPLIT = 180;       // separación mínima + miguitas
-const T_OPEN = 420;        // aparece folio
-// (no hacemos fade a otra página porque has pedido que salga el folio con datos)
+stage.addEventListener("click", () => {
 
-function run(){
   if(opened) return;
   opened = true;
 
-  setTimeout(()=> wax.classList.add("crack"), T_CRACK_SHOW);
-  setTimeout(()=> wax.classList.add("split"), T_SPLIT);
-  setTimeout(()=> stage.classList.add("open"), T_OPEN);
-}
+  // grieta visible
+  wax.querySelector(".wax-crack").style.opacity = 1;
 
-stage.addEventListener("click", run);
-stage.addEventListener("keydown", (e)=>{
-  if(e.key === "Enter" || e.key === " "){
-    e.preventDefault();
-    run();
-  }
+  // miguitas
+  document.querySelectorAll(".crumb").forEach(c => {
+    c.style.opacity = 1;
+    c.style.animation = "crumb .5s forwards";
+  });
+
+  // abrir
+  setTimeout(() => {
+    stage.classList.add("open");
+  }, 400);
 });
