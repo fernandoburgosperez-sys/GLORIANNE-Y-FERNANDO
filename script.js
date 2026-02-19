@@ -1,93 +1,79 @@
-* { margin:0; padding:0; box-sizing:border-box; }
+const envelope = document.getElementById("envelope");
+const intro = document.getElementById("intro");
+const main = document.getElementById("main");
+const wax = document.getElementById("wax");
 
-body{
-    background:#f4efe8;
-    font-family:'Cormorant Garamond', serif;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    overflow:hidden;
+const crack = document.getElementById("crackSound");
+const paper = document.getElementById("paperSound");
+
+let opened = false;
+let audioPrimed = false;
+
+// Timing total ~2.5s
+const T_CRACK_SHOW = 90;     // aparece grieta
+const T_SPLIT = 180;         // se separan piezas (pegadas)
+const T_OPEN = 420;          // abre solapa + papel
+const T_FADE = 2500;         // transicion
+
+function safePlay(a){
+  if(!a) return;
+  a.currentTime = 0;
+  const p = a.play();
+  if(p && p.catch) p.catch(()=>{});
 }
 
-/* INTRO */
-.intro{
-    position:fixed;
-    inset:0;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    background:#efe9df;
-    transition:opacity 0.8s ease;
+// iOS warm-up (silencioso) para permitir audio en click
+function primeAudio(){
+  if(audioPrimed) return;
+  audioPrimed = true;
+
+  [crack, paper].forEach(a=>{
+    if(!a) return;
+    a.muted = true;
+    a.currentTime = 0;
+    const p = a.play();
+    if(p && p.then){
+      p.then(()=>{ a.pause(); a.currentTime = 0; a.muted = false; }).catch(()=>{ a.muted = false; });
+    } else {
+      a.muted = false;
+    }
+  });
 }
 
-.intro.fade{
-    opacity:0;
-    pointer-events:none;
+function run(){
+  if(opened) return;
+  opened = true;
+
+  // 1) Sonido crack + grieta visible
+  safePlay(crack);
+  setTimeout(()=> wax.classList.add("crack"), T_CRACK_SHOW);
+
+  // 2) Separación mínima + miguitas
+  setTimeout(()=> wax.classList.add("split"), T_SPLIT);
+
+  // 3) Abrir sobre + sonido papel
+  setTimeout(()=>{
+    envelope.classList.add("open");
+    safePlay(paper);
+  }, T_OPEN);
+
+  // 4) Fade y mostrar contenido
+  setTimeout(()=>{
+    intro.classList.add("fade");
+    main.classList.add("show");
+    main.setAttribute("aria-hidden", "false");
+  }, T_FADE);
 }
 
-.envelope-container{
-    position:relative;
-    width:420px;
-    max-width:90vw;
-    cursor:pointer;
-    perspective:1000px;
-}
+["pointerdown","touchstart","mousedown"].forEach(evt=>{
+  envelope.addEventListener(evt, primeAudio, { passive:true });
+});
 
-.envelope-img{
-    width:100%;
-    display:block;
-    border-radius:6px;
-    box-shadow:0 25px 60px rgba(0,0,0,0.15);
-    transition:transform 0.8s ease;
-}
+envelope.addEventListener("click", run);
+envelope.addEventListener("keydown", (e)=>{
+  if(e.key === "Enter" || e.key === " "){
+    e.preventDefault();
+    run();
+  }
+});
 
-/* SOLAPA */
-.flap{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:50%;
-    transform-origin:top;
-    transition:transform 0.8s ease;
-}
-
-/* CARTA */
-.letter{
-    position:absolute;
-    width:80%;
-    left:10%;
-    top:45%;
-    background:white;
-    padding:20px;
-    text-align:center;
-    transform:translateY(50px);
-    transition:transform 0.8s ease;
-    box-shadow:0 10px 30px rgba(0,0,0,0.1);
-}
-
-.open .flap{
-    transform:rotateX(-160deg);
-}
-
-.open .letter{
-    transform:translateY(-120px);
-}
-
-.microcopy{
-    margin-top:20px;
-    font-size:15px;
-    letter-spacing:1px;
-    color:#555;
-}
-
-.main{
-    opacity:0;
-    transition:opacity 1s ease;
-}
-
-.main.show{
-    opacity:1;
-}
