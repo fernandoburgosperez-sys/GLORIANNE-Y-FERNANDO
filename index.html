@@ -4,88 +4,89 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Invitación</title>
+
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
 </head>
 
 <body>
-  <div class="intro" id="intro">
-    <button class="stage" id="stage" type="button" aria-label="Abrir invitación">
-      <!-- SOBRE (imagen) -->
-      <img
-        class="envelope-img"
-        src="./assets/envelope-closed.png?v=3"
-        alt="Sobre cerrado"
-        loading="eager"
-      />
 
-      <!-- SELLO ANIMADO (encima) -->
-      <div class="wax" id="wax" aria-hidden="true">
-        <div class="wax-half wax-left"></div>
-        <div class="wax-half wax-right"></div>
+<div class="intro">
+  <button class="stage" id="stage" type="button" aria-label="Abrir invitación">
 
-        <svg class="wax-crack" viewBox="0 0 100 100" aria-hidden="true">
-          <path d="M52 10 L47 22 L58 34 L50 46 L60 58 L48 70 L54 82 L45 92"
-                fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="2.2"
-                stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+    <!-- SOBRE -->
+    <img
+      class="envelope-img"
+      src="./assets/envelope-closed.png?v=1"
+      alt="Sobre cerrado"
+    />
 
-        <span class="crumb c1"></span>
-        <span class="crumb c2"></span>
-        <span class="crumb c3"></span>
-        <span class="crumb c4"></span>
+    <!-- SELLO ANIMADO -->
+    <div class="wax" id="wax">
+      <div class="wax-half wax-left"></div>
+      <div class="wax-half wax-right"></div>
 
-        <div class="wax-monogram">G&F</div>
-      </div>
+      <svg class="wax-crack" viewBox="0 0 100 100">
+        <path d="M52 10 L47 22 L58 34 L50 46 L60 58 L48 70 L54 82 L45 92"
+              fill="none"
+              stroke="rgba(255,255,255,0.6)"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+      </svg>
 
-      <!-- FOLIO (sale tras abrir) -->
-      <article class="sheet" id="sheet" aria-hidden="true">
-        <p class="kicker">INVITACIÓN</p>
-        <h1 class="names">Glorianne & Fernando</h1>
-        <p class="dateplace">30 de enero de 2027 · Santo Domingo (R.D.)</p>
+      <span class="crumb c1"></span>
+      <span class="crumb c2"></span>
+      <span class="crumb c3"></span>
+      <span class="crumb c4"></span>
 
-        <div class="divider"></div>
+      <div class="wax-monogram">G&F</div>
+    </div>
 
-        <h2 class="h">Ceremonia (religiosa)</h2>
-        <p><strong>Iglesia:</strong> Convento de los Dominicos</p>
-        <p><strong>Hora:</strong> (pendiente)</p>
+    <!-- FOLIO -->
+    <article class="sheet">
+      <p class="kicker">INVITACIÓN</p>
+      <h1>Glorianne & Fernando</h1>
+      <p class="date">30 de enero de 2027 · Santo Domingo (R.D.)</p>
 
-        <div class="divider"></div>
+      <div class="divider"></div>
 
-        <h2 class="h">Celebración</h2>
-        <p><strong>Lugar:</strong> Hotel Nicolás de Ovando</p>
-        <p><strong>Hora:</strong> (pendiente)</p>
+      <h2>Ceremonia (religiosa)</h2>
+      <p><strong>Iglesia:</strong> Convento de los Dominicos</p>
+      <p><strong>Hora:</strong> (pendiente)</p>
 
-        <div class="divider"></div>
+      <div class="divider"></div>
 
-        <h2 class="h">Código de vestimenta</h2>
-        <p>Hombres → Chacabana o Guayavera</p>
+      <h2>Celebración</h2>
+      <p><strong>Lugar:</strong> Hotel Nicolás de Ovando</p>
+      <p><strong>Hora:</strong> (pendiente)</p>
 
-        <div class="divider"></div>
+      <div class="divider"></div>
 
-        <h2 class="h">Confirmación de asistencia (RSVP)</h2>
-        <p class="muted">Por favor confirma tu asistencia antes del (pendiente).</p>
+      <h2>Código de vestimenta</h2>
+      <p>Hombres → Chacabana o Guayavera</p>
 
-        <div class="actions">
-          <a class="btn primary" href="#rsvp" onclick="return false;">Confirmar asistencia</a>
-          <a class="btn secondary" href="#playlist" onclick="return false;">Sugerir canción</a>
-        </div>
+      <div class="divider"></div>
 
-        <div class="divider"></div>
+      <h2>Confirmación de asistencia (RSVP)</h2>
+      <p>Por favor confirma tu asistencia antes del (pendiente).</p>
 
-        <h2 class="h">Playlist</h2>
-        <p>Queremos que la música también tenga tu toque. Añade la canción que no puede faltar.</p>
+      <div class="divider"></div>
 
-        <div class="divider"></div>
+      <h2>Playlist</h2>
+      <p>Queremos que la música también tenga tu toque.</p>
 
-        <p class="closing">Gracias por ser parte de nuestra historia.</p>
-        <p class="signature">Con cariño, Fernando & Glorianne.</p>
-      </article>
-    </button>
+      <div class="divider"></div>
 
-    <p class="microcopy">Pulsa para abrir</p>
-  </div>
+      <p class="closing">Gracias por ser parte de nuestra historia.</p>
+      <p class="signature">Con cariño, Fernando & Glorianne.</p>
+    </article>
 
-  <script src="script.js"></script>
+  </button>
+
+  <p class="microcopy">Pulsa para abrir</p>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
