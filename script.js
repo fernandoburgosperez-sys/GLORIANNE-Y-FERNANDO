@@ -1,35 +1,21 @@
 const stage = document.getElementById("stage");
-const intro = document.getElementById("intro");
-const main = document.getElementById("main");
 const wax = document.getElementById("wax");
 
 let opened = false;
 
-// Timing total ~2.5s
+// timing elegante
 const T_CRACK_SHOW = 90;   // aparece grieta
-const T_SPLIT = 180;       // separación mínima
-const T_OPEN = 420;        // carta sube
-const T_FADE = 2500;       // transición
+const T_SPLIT = 180;       // separación mínima + miguitas
+const T_OPEN = 420;        // aparece folio
+// (no hacemos fade a otra página porque has pedido que salga el folio con datos)
 
 function run(){
   if(opened) return;
   opened = true;
 
-  // grieta
   setTimeout(()=> wax.classList.add("crack"), T_CRACK_SHOW);
-
-  // separación + miguitas
   setTimeout(()=> wax.classList.add("split"), T_SPLIT);
-
-  // carta
   setTimeout(()=> stage.classList.add("open"), T_OPEN);
-
-  // fade a contenido
-  setTimeout(()=>{
-    intro.classList.add("fade");
-    main.classList.add("show");
-    main.setAttribute("aria-hidden", "false");
-  }, T_FADE);
 }
 
 stage.addEventListener("click", run);
